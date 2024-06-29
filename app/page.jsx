@@ -16,6 +16,12 @@ const page = () => {
             <p className="max-w-[500px] mb-9 text-white/80">
               diplômé d'une licence en informatique avec une spécialisation en développement web et mobile.
             </p>
+            { /* btn and socials */}
+            <div>
+              <Button>
+                <span>Télécharger mon CV</span>
+              </Button>
+            </div>
           </div>
           {/* photo */}
           <div>photo</div>
