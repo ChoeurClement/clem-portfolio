@@ -24,22 +24,6 @@ const Contact = () => {
   const [telephone, setTelephone] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async () => {
-    await fetch("/api/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        nom,
-        prenom,
-        email,
-        telephone,
-        message
-      })
-    });
-  };
-
   return (
     <motion.section
       initial={{opacity: 0}}
