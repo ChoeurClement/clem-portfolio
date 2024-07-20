@@ -23,15 +23,6 @@ const projets = [
     image: "/assets/projets/asset-p1.jpg",
     live: "",
     github: "https://github.com/ChoeurClement/clem-portfolio"
-  },
-  {
-    num: "02",
-    nom: "Test",
-    description: "Projet test",
-    stack: [{nom: "React.js"}, {nom: "Tailwind.Css"}],
-    image: "/assets/projets/asset-p1.jpg",
-    live: "",
-    github: "https://github.com/ChoeurClement/clem-portfolio"
   }
 ]
 
