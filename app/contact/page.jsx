@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Alert } from "@/components/ui/alert";
 
 import { FaEnvelope } from "react-icons/fa";
 
@@ -13,7 +14,7 @@ const info = [
   {
     icon: <FaEnvelope />,
     titre: "Email",
-    description: "pro.clement59@gmail.com"
+    description: "contact@choeurclement.fr"
   }
 ]
 
@@ -23,6 +24,50 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
   const [message, setMessage] = useState("");
+
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("success");
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/emails", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nom,
+          prenom,
+          email,
+          telephone,
+          message
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setAlertType("success");
+        setAlertMessage("Email envoyé avec succès !");
+      } else {
+        setAlertType("error");
+        setAlertMessage("Échec de l'envoi de l'email.");
+      }
+    } catch (error) {
+      setAlertType("error");
+      setAlertMessage("Une erreur est survenue lors de l'envoi de l'email.");
+    } finally {
+      setAlertVisible(true);
+
+      // Réinitialiser les états
+      setNom("");
+      setPrenom("");
+      setEmail("");
+      setTelephone("");
+      setMessage("");
+    }
+  };
 
   return (
     <motion.section
@@ -37,6 +82,11 @@ const Contact = () => {
         <div className="flex flex-col xl:flex-row gap-[30px]">
           {/* form */}
           <div className="xl:w-[54%] order-2 xl:order-none">
+            {alertVisible && (
+              <Alert type={alertType} onClose={() => setAlertVisible(false)}>
+                {alertMessage}
+              </Alert>
+            )}
             <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl" onSubmit={(e) => e.preventDefault()}>
               <h3 className="text-4xl text-accent">Me contacter</h3>
               <p className="text-white/60">Pour une simple question ou pour un projet n'hésitez pas à me contacter !</p>
@@ -78,18 +128,7 @@ const Contact = () => {
               <Button 
                 size="md" 
                 className="max-w-40"
-                onClick={async () => {
-                  await fetch("/api/emails", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      nom,
-                      prenom,
-                      email,
-                      telephone,
-                      message
-                    })
-                  })
-                }}
+                onClick={handleSubmit}
               >
                 Envoyer
               </Button>
