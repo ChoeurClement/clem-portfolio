@@ -9,9 +9,9 @@ export async function POST(request) {
     const { nom, prenom, email, telephone, message } = await request.json();
 
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'contact@choeurclement.fr',
       to: 'pro.clement59@gmail.com',
-      subject: 'Contact depuis Portfolio',
+      subject: 'Contact Portfolio',
       react: Email(nom, prenom, email, telephone, message),
     });
 
